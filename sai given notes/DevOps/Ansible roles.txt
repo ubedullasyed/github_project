@@ -1,0 +1,81 @@
+##########################################  Ansible roles   #################################################
+
+puppet: modules | chef: cookbooks | Ansible: Role
+
+Apache: role for apache
+       - whatever is required for apache to run will be in the role.
+	   
+Role: is pre-defind stature which should be used to configured any appication.
+
+#ansible-galaxy init apache --offline -> use for to creating a structure.
+
+components of roles:
+
+defaults = it provide the data about the role/application.default variables will be stored in this folder.
+files = put the static files here.
+Handlers = kind of refresh or trigger .Tasks which are based on some actions.
+          - In case my http.conf changes,it should trigger service restart.
+		  
+meta = it tells about the role, information about the role like Author name,supported platforms etc...Dependencies , if any
+tasks = actions are stored , core logic or code .Installing packages,coping files etc..
+
+Templates : will be stored in the dynamic files -> similar to files except that templates support dynamic files.
+
+vars: both vars and defaults stores variables.variables stored under "vars" has got high priority.
+
+main.yml file exceution will be start using this file.
+
+project sample:
+
+#cd tasks -> vim main.yml file
+- include: install.yml
+- include: configure.yml
+- include: service.yml
+
+incide tasks: vim install.yml
+---
+- name: install apache
+  apt:
+    name: apache2
+	state: latest
+	
+incide tasks: vim configure.yml
+---
+- name: apache2.conf
+  copy: src=apache2.conf dest=/etc/apache2/apache2.conf
+  notify:
+   - restart apache service
+- name: send index.html
+  copy: src=index.html dest=/var/www/html/index.html
+
+incide tasks: vim service.yml
+---
+- name: start apache service
+  service: name=apache2 state=started
+
+incide files: #cp /etc/apache2/apache2.conf .
+              #vim apache2.conf ->modified ansible file
+
+              #vim index.html --> edit sample file
+			  <html>
+			  <h1> Learning ansible roles </h1>
+			  </html>
+
+incide handlers: #vim main.yml
+---
+- name: restart apache service
+  service: name=apache2 state=restarted
+
+incide /etc/ansible: create site.yml file
+#vim site.yml
+---
+- hosts: webserver
+  sudo: yes
+  roles: 
+    - apache
+	
+To check syntax : #ansible-playbook site.yml --syntax-check
+
+https://github.com/arbabnazar/ansible-aws-vpc-ha-wordpress/tree/master/aws/vars --> ansible vpc-sg-ec2-rds-route53 playbook
+	
+

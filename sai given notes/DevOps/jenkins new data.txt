@@ -1,0 +1,129 @@
+#################################### jenkins ############################################
+
+-> Jenkins is a Continuous Integration server.
+ . Jenkins is an open source automation tool written in Java with plugins built for Continuous Integration purpose.
+ . Jenkins is used to build and test your software projects continuously making it easier for developers to integrate changes to the project
+ . It is also allows you to continuously deliver your software by integrating with a large number of testing and deployment technologies.
+ 
+ plugins: 
+  . Jenkins achieves Continuous Integration with the help of plugins.
+  . Plugins allows the integration of Various DevOps stages.
+  . If you want to integrate a particular tool, you need to install the plugins for that tool.
+  . example: Git, Maven 2 project, Amazon EC2, HTML publisher etc.
+  
+ Advantages of Jenkins include:
+ 
+  . It is an open source tool with great community support.
+  . It is easy to install.
+  . It has 1000+ plugins to ease your work. If a plugin does not exist, you can code it and share with the community.
+  . It is free of cost.
+  . It is built with Java and hence, it is portable to all the major platforms.
+
+-> https://www.jdev.it/deploying-your-war-file-from-jenkins-to-tomcat/
+
+-> https://thepracticalsysadmin.com/setting-up-a-github-webhook-in-jenkins/ -->gitwebhooks
+
+############################## Jenkins master and slave nodes ################################################
+
+-> A master represents basic installation of Jenkins and handles all tasks for the build system.
+-> A slave is a system that is set up to reduce the burden of build projects from the master but delegation behavior depends on the configuration of each project.
+-> Labels: which is used while configure in the job.
+
+  . SSH Slaves plugin
+Install Java Open JRE or JDK: on slave machine
+#sudo apt install default-jre
+
+JRE (Java Runtime Environment): 
+   . Like the base model car.
+   . JRE enables the ability to create Java Applications for different types of deployments using minimal core tools to accomplish the task.
+JDK (Java Development Kit):
+   . JDK is a fully loaded Development Kit that has everything that JRE has plus additional resources to create/secure Applications and Applets.
+   
+Ref Link: https://www.atlantic.net/cloud-hosting/how-to-install-java-jre-jdk-ubuntu-16-04/
+Ref Link: https://wiki.jenkins.io/display/JENKINS/SSH+Slaves+plugin
+
+
+######### Build monitoring with Build Monitor Plugin #######################
+
+Build Monitor Plugin provides a detailed view of the status of selected Jenkins jobs.
+It provides the status and progress of selected jobs and names of people who might be responsible for "breaking the build".
+plugin name: Build Monitor 
+
+
+
+################################ jenkins usermanagement ############################
+
+-> Jenkins doesn't have any database but it is having config.xml file it will store the all configurations.
+-> Choose jenkins data base automatically create the users.
+  . Legacy mode: user's have read permissions only.
+  
+-> Delegate to servlet container --> tomcat user's can able to access the jenkins
+->  Matrix-based security: we can give the specific user to specific permissions.
+  
+
+############################### Manage user roles ###################################  
+  
+  . Create new users
+  . Configure users
+  . Create and Manage user roles - we need to install Role-based Authorization Strategy Plugin.	
+    
+  
+-> In Jenkins I have two different projects and two users I want to authorize:
+
+User1 can only view, build, deploy Project1.
+
+User2 can only view, build, deploy Project2 ----> using roles we can do it.
+   
+Authorization:
+  . Matrix based security: we can give the specific user to specific permissions.
+  
+   
+https://www.youtube.com/watch?v=EARaltfiPVM ----> usermanagement ref Link.
+https://www.youtube.com/watch?v=QvFungzXI5s ----> Manage user roles Link.
+
+########## Changing the Jenkins home directory on Ubuntu #################
+
+1. I would suggest editing the /etc/default/jenkins
+#vim /etc/default/jenkins
+And changing the $JENKINS_HOME variable (around line 23) to
+JENKINS_HOME=/home/jenkins
+
+2.Then restart the Jenkins with usual
+#/etc/init.d/jenkins start 
+
+################  Build ##########################
+#apt install openjdk-7-jdk --> install java pkg.
+
+Need to install jre and jdk pkg's: 
+ 
+#sudo apt install default-jdk
+#sudo apt install default-jre
+Maven Integration --> Maven plugin.
+
+https://www.vultr.com/docs/how-to-install-apache-maven-on-ubuntu-16-04 ----> install maven pkg.
+
+#vim /etc/profile.d/apache-maven.sh
+
+export M2_HOME=/opt/maven
+export PATH=${M2_HOME}/bin:${PATH}
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export PATH=${JAVA_HOME}/bin:${PATH}
+
+https://vmokshagroup.com/blog/what-is-jenkins/---> CI pipe line.
+
+
+
+#############Jenkins Installation################
+
+
+sudo apt update
+javac -version
+#sudo apt install default-jdk
+#sudo apt install default-jre
+cd /tmp && wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
+Ref link:   https://websiteforstudents.com/install-jenkins-on-ubuntu-16-04-17-10-18-04-lts-server/
+
+
+http://52.87.251.124:8080
+

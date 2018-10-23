@@ -1,0 +1,11 @@
+ELB Lab :
+-> create ELB two ways internal purpose and external purpose.
+-> How is my webserver is going to lesson using HTTP protocal.
+-> Response time: means ELB will send quarry to EC2 instance and How long it can wait to get the responce back.(How long it can wait)
+-> Health Check Interval: How frequently ELB can quarry the health check. it will check every mension time periodically check.(How frequently it can be check).
+-> Unhealthy Threshold: Mention time  getting not responce then ELB decide instance fail.
+-> Healthy Threshold: Mention time it is going to quarry then ELB will decide the state.
+-> Monitoring : Error : 5xxs-> is related to backend instance or backend infrastructure i would say.
+                        4xxs -> is related to services or configuration issues.
+						2xxs -> is not error like status check.
+						

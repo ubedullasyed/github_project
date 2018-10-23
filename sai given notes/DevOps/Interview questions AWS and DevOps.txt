@@ -1,0 +1,179 @@
+################################# Interview questions ############################## passwd: satya7789
+
+1. NRPE port number --> 5666
+2. NRPE: Nagios Remote Plugin Executor -> allows you to remotely execute Nagios plugins on other Linux/Unix machines.
+                                       -> allows you to monitor remote machine metrics (disk usage, CPU load, etc.)
+									   -> NRPE can also communicate with some of the Windows agent add ons, so you can execute scripts and check metrics on remote Windows machines as well.
+									   
+3. Telnet port number: 23
+
+4.How to check particular port is running or not using telnet remote server?
+#telnet <i.p> <portnumber> (Note: you need to install telnet your system)
+
+5.How to configure SSL certificate?
+. first you need to download the certificate and key files on related domain owner site.
+. once you have download that files copied to your server location perticular path.
+.finally enable SSL : these two files location path mention into related webserver conf location.
+
+example:  <VirtualHost 192.168.0.1:443>
+          DocumentRoot /var/www/website
+          ServerName www.domain.com
+          SSLEngine on
+          SSLCertificateFile /etc/ssl/crt/primary.crt
+          SSLCertificateKeyFile /etc/ssl/crt/private.key
+          SSLCertificateChainFile /etc/ssl/crt/intermediate.crt
+          </VirtualHost> 
+
+6. How to upgrade docker container ?
+
+7. how to create git branch ?
+
+8. how to merge git branch to master?
+
+9. how to troubleshoot to merge a branch into master?
+
+10. How should I control the versions of my project on GitHub?
+
+11. How to run multiple jobs run at atime in jenkins ?
+You can use a pipeline to tie the jobs together, executing them either in parallel or sequentially through steps.
+
+12. Recover Lost Key Pair of AWS EC2 Linux Instance?
+Ref link: https://www.youtube.com/watch?v=OF2AOekW4IE
+
+13. How to extend root file system?
+
+Ref link: http://linuxroutes.com/extend-resize-linux-root-partition-on-aws-ec2/
+
+13. what is VPC? difference between public and private subnet?
+
+14. what is difference between public ip and private ip?
+A public IP address is assigned to your instance from Amazon's pool of public IP addresses it's not associated with your account.
+When a public IP address is disassociated from your instance, it's released back into the pool, and is no longer available for you to use.
+You cannot manually associate or disassociate a public IP address.
+However,If you require a persistent public IP address that can be assigned to and removed from instances as you require, use an Elastic IP address.
+
+The public IP you get when an instance is created (and you opt to give it a public IP) is ephemeral.if you stop that instance, when you start it up you'll get another random public IP.
+So, Public IP get's changed everytime for an instance after stop/start.
+To overcome with this problem, we attach an Elastic IP to an Instance which doesn't change after you stop / start the instance as many times.
+
+Advantage of Having Elastic IP
+-> It is kind of static IP for your Instance.
+-> Doesn't change after stop/start.
+
+15. what is netmask?
+A netmask is a 32-bit mask used to divide an IP address into subnets and specify the network's available hosts. In a netmask, two bits are always automatically assigned. 
+For example, in 255.255.225.0, "0" is the assigned network address. In 255.255.255.255, "255" is the assigned broadcast address. The 0 and 255 are always assigned and cannot be used.
+
+16. what is subnet mask?
+Subnet masks are used to design subnetworks, or subnets, that connect local networks.
+It determines both the number and size of subnets where the size of a subnet is the number of hosts that can be addressed.
+
+17. how to install apache package in different OS family?
+
+Now when the package name is the same across different OS families, it's as simple as:
+
+---
+- name: Install foo
+  package: name=foo state=latest
+  
+When the package name differs across OS families, you can handle it with distribution or OS family specific vars files:
+
+---
+# roles/apache/apache.yml: Tasks entry point for 'apache' role. Called by main.yml
+# Load a variable file based on the OS type, or a default if not found.
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "../vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version | int}}.yml"
+    - "../vars/{{ ansible_distribution }}.yml"
+    - "../vars/{{ ansible_os_family }}.yml"
+    - "../vars/default.yml"
+  when: apache_package_name is not defined or apache_service_name is not defined
+
+- name: Install Apache
+  package: >
+    name={{ apache_package_name }}
+    state=latest
+
+- name: Enable apache service
+  service: >
+    name={{ apache_service_name }}
+    state=started
+    enabled=yes
+  tags: packages
+  
+Then, for each OS that you must handle differently... create a vars file:
+
+---
+# roles/apache/vars/default.yml
+apache_package_name: apache2
+apache_service_name: apache2
+
+---
+# roles/apache/vars/RedHat.yml
+apache_package_name: httpd
+apache_service_name: httpd
+
+For more information ref below link:
+https://serverfault.com/questions/587727/how-to-unify-package-installation-tasks-in-ansible
+
+
+18. Delete empty lines using SED ? (How to deleate empty lines in text file)
+#sed -i '/^\s*$/d' file.txt
+
+19. How to use sed to find and replace text in files in Linux / Unix shell ?
+--> The sed stands for stream editor.
+--> It reads the given file, modifying the input as specified by a list of sed commands.
+#sed -i 's/old-text/new-text/g' input.txt
+
+-> s = is the substitute command of sed for find and replace.
+
+#sed -i -e 's/word1/word2/g' -e 's/xx/yy/g' input.file --> to change multiple words at time using sed.
+
+20. what is autoscaling ?
+21. what is elastic ip ?
+22. what is difference between nacl and security groups ?
+--> The difference between Security Group and ACLs is that, Security Group act as a firewall for associated Amazon EC2 instances, controlling both inbound and outbound traffic at the instance level,
+    while ACLs act as a firewall for associated subnets, controlling both inbound and outbound traffic at the subnet level.
+	
+23. VPC Peering ?
+--> A VPC peering connection is a networking connection between two VPCs that enables you to route traffic between them privately. 
+    Instances in either VPC can communicate with each other as if they are within the same network. 
+	You can create a VPC peering connection between your own VPCs, with a VPC in another AWS account, or with a VPC in a different AWS Region.
+	
+################################### add new data ################################
+
+################################ interview questions ###########################################
+1.How to monitor jenkins build jobs?
+-> install Build monitor plugin in jenkins
+-> Create a new view and select Build Monitor View
+-> Select Jobs and save the details.
+-> Ref link : https://www.packtpub.com/mapt/book/application_development/9781783553471/7/ch07lvl1sec50/build-monitoring-with-build-monitor-plugin 
+
+2.what is POM?
+-> POM is a xml file which contains the project configuration details used by Maven. 
+-> It provides all the configuration required for a project.
+-> POM means Project Object Model & as the name suggests it defines the model of the project as well.
+-> In the normal project development you will add jar files & libraries as required.In maven based development, those jars, libraries are added to the project using this pom.xml.
+-> In the pom context we call those jars, libraries as Dependencies.
+ 
+3.diff b/w branch and tag?
+4.what is docker?
+-> Docker is a tool designed to make it easier to create, deploy, and run applications by using containers.
+-> Build once you can ship anywhere.
+
+5.How to check open ports in remote server?
+-> Link: https://www.youtube.com/watch?v=FNTv7BmpR1E
+-> #nmap <i.p>
+
+6. diff b/w yum update and upgrade?
+7. diff b/w git merge and rebase ?
+8. what is git stash ?
+
+	
+	
+
+
+
+
+
+		  

@@ -1,0 +1,202 @@
+﻿########################################### GIT ######################################################################
+
+-> Git is an open source, distributed version control system (VCS). It’s commonly used for source code management (SCM).
+-> Git is a free and open source distributed version control system designed to handle projects with speed and efficiency.
+GitHub : It is a web-based Git repository hosting service.GitHub offers all of the distributed revision control and source code management (S.C.M.) functionality of Git as well as adding its own features.
+
+. Git - Git is system for version control primarily used by programmers and others who writs code.
+      - It runs at the command line on your local machine.
+	  - It allows you to keep track of your files and modifications to those files in something called a repository (repo).
+	  - To track last five changes to the rep :#git log -5 
+	  - you can use it with a team of people who are working on the same project.
+	  - It's useful in team env because everyone can work independently on those files.
+	  
+ . Git Hub - Git HUb is website that allows you to upload your Git repositories online.
+          - It gives GUI for navigating your repos.
+		  - It gives other peoples navigate your repos.
+		  - Finally it makes repo collaboration easy.
+		  
+ . Then configure Git with the new user as follows:
+    #git config --global user.name "Your Name"
+	#git config --global user.email "you@example.com"
+
+ . Now verify Git configuration using following command:
+    #git config --list 
+	
+ . #git init is used to start using git on a project.
+ . #Each project has one .git folder in the project's root directory and that is the project's repository.
+   -> This is one of the reasons git is so fast compared to svn or cvs - the entire repository is processed on the local hard disk without any network traffic.
+   
+   -> git init initialises (i.e. creates) a repository. Each project should be in its own repository.If you downloaded your project using git clone then you don't need to run git init again.
+   
+-> #git add : adds your modified files to the queue to be committed later. Files are not committed
+   #git commit: commits the files that have been added and creates a new revision with a log... If you do not add any files, git will not commit anything. You can combine both actions with #git commit -a
+   #git push : pushes your changes to the remote repository.
+   #git remote add origin <remote repository URL> --> to add remote repo
+   
+-> #git add selects changes
+   #git commit records changes LOCALLY
+   #git push shares changes
+   
+-> #git fetch: is the command that says "bring my local copy of the remote repository up to date."
+   #git pull: says "bring the changes in the remote repository where I keep my own code."
+		  
+1. How to initialize an empty git repository.
+2. How to stage and commit the files.
+3. How to create Branch and swith b/w diff Branches.
+4. How to revert to older file version by swithing to another Branch.
+5. How to merge two Branches.
+
+############################ Git commands ###############################
+
+#git initialize
+ - we have made new file test.txt . we will write something into.
+ - now, we will stage the file to saved into repository by 'git add <f.n>' and commit the changes by 'git commit -m <message>'
+ - we have made our first commit!Now, we will make another branch out of this commit and make changes to the file from this new branch while 
+    we will call as 'secondary'
+ - #git branch secondary : does not take you that branch! Remember your current branch name is displayed in the parenthesis which is still master.
+ - To change branch : #git checkout <fn>
+ - we have changed the file ...lets commit our changes as we did before!
+ 
+ - Ok now switch to master branch again and see what we have in our test.txt file.
+ - Wow! the file is not changed as it was saved first in master branch.This is major advantages of branching which lets your files
+   have multiple versons and lets you switch b/w them any time conviniently.
+   
+ -> Now lets create another file here in master branch and then we'll merge both branches together and see the results.
+    add this file to staging files and commit changes.
+
+-> we have two files now ...we'll now merge the secondary branch with master so that master will have updated copy of "test.txt" from secondary branch.
+
+-> lists branches merged into master: #git branch --merged master
+-> lists branches merged into HEAD: #git branch --merged
+-> lists branches that have not been merged: #git branch --no-merged
+-> By default this applies to only the local branches. 
+    -> -a flag will show both local and remote branches, and the -r flag shows only the remote branches.
+-> you can delete it locally: #git branch -d mybranch
+-> To check the branchs list :#git branch -va
+
+
+############################################################################################################################
+Branch: Allows to working with the different versions of the same file as parallel. branch's are independed we have create diff branches like dev and prod to work on diff versions.
+
+#git log --all --decorate --oneline --graph : To check the head pointer.
+#alias graph="git log --all --decorate --oneline --graph" : To create alias
+
+HEAD:  is a ref (reference point) to the currently checked out commit.some times call symbolic pointer HEAD tell out terminal what we have checkout.
+
+Merge: 
+Fast-Forward-merge: Move branch directly to the master branch.
+3-way merge: not a direct path to merge master branch to merge branch.
+
+#git diff master..SDN : To check the two branchs diff
+
+#git branch --merged : Before delete the SDN(branch)merge to check which branch is merged to which one. 
+
+####################################### Merge conflicts #########################################################
+
+-> checking the both brnaches modified files what are the changes updated and remove those conflicts related data.
+#edit master branch modified file
+#git add .
+#git commit
+-> then delete the merged barnch.
+
+######################################## Detached HEAD ##########################################################
+
+#git checkout 13a33bc --> HEAD is detached and pointing to old one.
+#git branch stage --> to create stage barnch here graph shows HEAD is pinting to checkout branch.
+
+GIT stash: To save working directory.(git stash you have save unfinished work not commit once stash our working area and staging area are clean)
+#git stash
+#git stash list
+#git stash list -p -> to observe the edit's for each stash.
+#git stash apply --> we can re-apply stash's any time.
+#git stash apply stash@{1} --> we can re-apply recent data.
+#git stash save "add yellow Vlan" --> to save msg. 
+
+Ref link: https://www.youtube.com/watch?v=FyAAIHHClqI
+
+
+#######################################################################################################################
+
+-> To create branch #git branch <branchname>
+-> Enter branch : #git checkout <branchname>
+-> Back to master branch : #git checkout master
+-> merge the master branch: #git merge newbranch
+-> To push the update data to repo: #git push origin master
+-> To delete local branch : #git branch -d <branchname>
+-> Check list of branches :#git branch
+-> pull the updated data : git pull http link.
+-> create and enter new branch : git checkout -b branchname
+-> To update current branch to master : git rebase master
+-> add the remote origin : git remote add origin link.
+
+####################################
+
+-> Github allows you to:  . share your repositories with others.
+                          . Access other user's repositories.
+                          . Store remote copies of your repositories (github servers) as backup of your local copies.
+						  . GitHub is a hosting service for Git repositories.
+						  
+####################################
+
+-> Rebase : . As an alternative to merging, you can rebase the feature branch onto master branch using the following commands:
+              #git checkout feature
+              #git rebase master
+			 . The major benefit of rebasing is that you get a much cleaner project history. 
+			 . First, it eliminates the unnecessary merge commits required by git merge.
+			 . Second, rebasing also results in a perfectly linear project history
+
+
+-> How to get old data: #git checkout @{1.days.ago}
+                        #git checkout a9b7dc7-> this is called branch name
+                        
+-> How to reset commited files: #git reset --soft <good commit hash> -find out hash log using git log
+
+-> install private own gitrepo: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-gitlab-on-ubuntu-16-04
+-> diff b/w VCS and DVCS : https://www.edureka.co/blog/what-is-git/
+
+-> https://www.edureka.co/blog/what-is-git/ - basic data
+
+-> https://www.linux.com/learn/HOW-RUN-YOUR-OWN-GIT-SERVER -- create private git server using GIT LAB
+
+#git remote set-url origin git@github.com:demodevops2/devopscls04repo.git --> to add ssh path with out asking credentials.
+
+-> Recover a deleted repository github issues: 
+You need to email support@github.com as soon as possible when this happens.
+
+#####################################################  restore a deleted file ###################################
+
+-> How to restore a deleted file?
+#git log --diff-filter=D --summary                  # all deleted files ever
+git log --diff-filter=D --summary .                # all deleted files in cwd 
+git log --diff-filter=D --author=Batman --summary  # all files deleted by Batman
+
+#git checkout <commit>~1 <filename> --> restore deleted files
+
+-> To make this process a little easier next time I need to do it, I created a git alias for finding deleted files by adding this to my .git/config file:
+[aliases]
+deleted = log --diff-filter=D --summary
+
+-> If the deletion has not been committed, the command below will restore the deleted file in the working tree?
+git checkout -- <filename>
+
+-> You can get a list of all the deleted files in the working tree using the command below
+git ls-files --deleted
+
+-> If the deletion has been committed, find the commit where it happened, then recover the file from this commit?
+git rev-list -n 1 HEAD -- <filename>
+#git checkout <commit log path>^ -- <filename>
+
+-> In case you are looking for the path of the file to recover, the following command will display a summary of all deleted files?
+git log --diff-filter=D --summary
+
+
+https://www.youtube.com/watch?v=FyAAIHHClqI
+
+
+
+
+
+
+
+		  

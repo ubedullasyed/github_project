@@ -1,0 +1,154 @@
+Ansible is open source automation platform. Ansible can help you with Configuration management, application deployment,task automation and also IT orchestration.
+It is very simple to setup,effieient and more powerful.
+
+Orchestration:
+Cloud orchestration is arranging and coordinating of automated tasks, which ultimately results in a single process of workflow.
+Orchestration describes automated arrangement, coordination, and management of complex computer systems, and services.
+Connecting and automating of work flows when applicable to deliver a defined service
+
+Advantages: 
+
+1. Ansible is free and opensource
+2. Agentless. ansible doesn't require a master client model.which means, no agent to be installed at the client.
+3. Ansible uses SSH for the operations on the existing network.
+4. Devloped in python.
+5. lightweight and quick deployment.
+6. Ansible uses YAML Syntax in congiguration files.
+
+Playbook: 
+   Palybooks are expressed in YAML format and have a minimum of syntax.
+
+
+##############################  Ansible playbook ##################################
+Install ansible on ubuntu 16.04LTS
+#sudo apt-add-repository ppa:ansible/ansible
+#sudo apt-get update
+#sudo apt-get install ansible.
+
+
+#vim /etc/ansible/hosts
+
+[webserver]
+172.31.19.29   ansible_ssh_user=ubuntu   ansible_ssh_private_key_file=/root/ganeshkey.pem 
+172.31.17.199   ansible_ssh_user=ubuntu   ansible_ssh_private_key_file=/root/ganeshkey.pem
+
+#ansible -m ping webservers --> to check target servers responce.
+
+#######################  Basic anisble palybook ##############################
+
+---
+- hosts: webserver
+  become: true
+  tasks:
+  - name: Install list of packages
+    apt: name={{item}} state=installed
+    with_items:
+       - apache2
+
+########################################################################################
+---
+- hosts: webserver
+  become: true
+  tasks:
+    - name: Installs tomcat8 webserver
+      apt: pkg=tomcat8 state=installed update_cache=true
+      notify:
+        - starttomcat
+
+  handlers:
+    - name: start
+      service: name=tomcat8 state=started
+
+
+
+######################## Provision an EC2 Instance ##################################  
+
+
+---
+  - name: Provision an EC2 Instance
+    hosts: localhost
+    connection: localhost
+    gather_facts: False
+    tags: provisioning
+    # Necessary Variables for creating/provisioning the EC2 Instance
+    vars:
+      instance_type: t2.micro
+      security_group: webserverSG # Change the security group name here
+      image: ami-aa2ea6d0 # This is an AMI i created myself
+      keypair: awskey # This is one of my keys that i already have in AWS
+      region: us-east-1 # Change the Region
+      count: 1
+
+    # Task that will be used to Launch/Create an EC2 Instance
+    tasks:
+
+      - name: Create a security group
+        local_action:
+          module: ec2_group
+          name: "{{ security_group }}"
+          description: Security Group for webserver Servers
+          region: "{{ region }}"
+          rules:
+            - proto: tcp
+              from_port: 22
+              to_port: 22
+              cidr_ip: 0.0.0.0/0
+            - proto: tcp
+              from_port: 80
+              to_port: 80
+              cidr_ip: 0.0.0.0/0
+            - proto: tcp
+              from_port: 443
+              to_port: 443
+              cidr_ip: 0.0.0.0/0
+          rules_egress:
+            - proto: all
+              cidr_ip: 0.0.0.0/0
+        register: basic_firewall
+	  - name: Launch the new EC2 Instance
+        local_action: ec2
+                      group={{ security_group }}
+                      instance_type={{ instance_type}}
+                      image={{ image }}
+                      wait=true
+                      region={{ region }}
+                      keypair={{ keypair }}
+                      count={{count}}
+        register: ec2
+		
+		
+############################  create s3 bucket ##########################################################
+
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Create S3 test bucket.
+    local_action:
+      module: aws_s3
+      bucket: 'anisblebucket'
+      mode: create
+      region: 'eu-west-2'
+      mode: create
+
+  - name: Set tags to S3 test bucket.
+    local_action:
+      module: s3_bucket
+      name: 'anisblebucket'
+      region: 'eu-west-2'
+      versioning: yes
+      tags:
+        Name: anisblebucket
+        env: prod
+        created_by: Ansible
+
+		
+	  
+			
+			
+			
+			
+			
+
+	  

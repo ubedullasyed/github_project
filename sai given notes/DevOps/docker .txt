@@ -1,0 +1,126 @@
+﻿#######################################  Docker Host  #########################################
+
+-> As of June 2014 Docker has officially released v1.0.0.
+-> Now docker latest release : Docker version 18.06.0
+
+Install docker: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
+
+docker image: A Docker Image is the template (application plus required binaries and libraries) needed to build a running Docker Container (the running instance of that image).
+             . Image is a file which describe how the container should behave.Its like a template of the container.
+docker Container: Container is the working copy.
+
+#docker pull ubuntu --> it will automatically pull it from Docker Hub.
+
+#docker run -i -t ubuntu /bin/bash
+
+. When you type exit the container and return to your main OS.all of your changes will be gone. To save changes to a container, we use commits.
+
+. When you create a Docker container, its hostname is automatically generated.(f7943e42aff0).
+
+#docker commit -a "William E." -m "Installed Apache" f7943e42aff0 apachesnapshot --> commit the container.
+#docker images
+
+# docker run -it --name=webserver ubuntu:latest --> create docker container with name.
+
+-> Once you’ve completed those instructions you can disconnect, or detach, from the shell without exiting use the escape sequence Ctrl-p + Ctrl-q.
+#docker commit 9c09acd48a25 fedora-base-with-git
+
+#docker logs 2c9d5e12800e - to view docker logs.
+
+#docker exec -it [container-id] bash --> how to enter docker container exit one.
+
+
+########################## Docker File ######################################
+-> Docker file is the test file or script which contains keywords and set of linux commands which are executed automatically whenever we 
+build the docker images or A Dockerfile is a text configuration file written in a popular, human-readable Markup Language called YAML.
+
+
+-> Create docker images using docker file is similar to template concept of virtualization world.
+
+Ref Link : https://www.linuxtechi.com/build-docker-container-images-with-dockerfile/
+
+Command	Description: 
+
+ADD: 	    Copies a file from the host system onto the container
+CMD: 	    The command that runs when the container starts (Used for executing commands when we build a new container from the docker image)
+ENTRYPOINT  Define the default command that will be executed when the container is running.
+ENV: 	    Sets an environment variable in the new container
+EXPOSE:	    Opens a port for linked containers
+FROM:	    The base image to use in the build. This is mandatory and must be the first command in the file.
+MAINTAINER:	An optional value for the maintainer of the script
+ONBUILD:    A command that is triggered when the image in the Dcokerfile is used as a base for another image
+RUN: 	    Executes a command and save the result as a new layer(Used to execute a command during the build process of the docker image.)
+USER:	    Sets the default user within the container (Set the user or UID for the container created with the image)
+VOLUME:	    Creates a shared volume that can be shared among containers or by the host machine(Enable access/linked directory between the container and the host machine.)
+WORKDIR:	Set the default working directory for the container(This is directive for CMD command to be executed)
+COPY:       Copy files from Docker host to container.
+
+
+#################################### Wordpress #################################
+Ref link: https://www.tecmint.com/install-wordpress-on-ubuntu-16-04-with-lamp/
+
+https://www.ctl.io/developers/blog/post/docker-networking-rules/ --> multiple port forwd
+
+start/stop/rm docker container:
+#docker start <ID>
+#docker stop <ID>
+#docker rm <ID>
+
+Commit a container with new CMD and EXPOSE instructions:
+#docker run -it --name=web -p 8080:80 dockerwebserver01
+
+#docker commit --change='CMD ["apachectl", "-DFOREGROUND"]' -c "EXPOSE 80" c3f279d17e0a  webserver
+
+create docker volumes:
+# docker volume create my-vol --> Create a volume
+
+#docker volume ls --> List volumes
+
+#docker volume inspect my-vol --> Inspect a volume
+
+#docker volume rm my-vol --> Remove a volume
+
+#docker run -d --name webserver --mount source=myvol2,target=/app ubuntu:latest --> Start a container with a volume
+
+#docker inspect <containername>
+
+stop / remove all of Docker containers: #docker stop $(docker ps -a -q)
+                                        #docker rm $(docker ps -a -q)
+
+################################# Docker - Container is not running #############################
+#docker exec -it 6198ef53d943 bash
+Error response from daemon: Container 6198ef53d9431a3f38e8b38d7869940f7fb803afac4a2d599812b8e42419c574 is not running
+
+#docker commit 6198ef53d943
+sha256:ace7ca65e6e3fdb678d9cdfb33a7a165c510e65c3bc28fecb960ac993c37ef33
+
+#docker run -it ace7ca65e6e bash
+root@72d38a8c787d:/#
+
+############################ Pushing the container to Docker Hub ######################
+
+#docker commit -m "mywebserver" myweb demodevops01/myweb:latest --> commit docker container with username.(myweb is container name)
+#docker login --> login into docker hub
+# docker push demodevops01/myweb --> push into docker hub
+
+##########################  Docker Network ###################################
+
+Docker takes care of the networking aspects so that the containers can communicate with other containers and also with the Docker Host.
+#docker network ls --> List of all docker networks
+#docker network inspect <networkname> --> If you want to see more details on the network associated with Docker.
+
+Network drivers: 
+bridge: The default network driver. If you don’t specify a driver, this is the type of network you are creating.
+overlay: Overlay networks connect multiple Docker daemons together and enable swarm services to communicate with each other.
+
+# docker network create <network name> --> create a user-defined bridge
+#docker create --name my-nginx --network gk-net -p 8080:80 ubuntu:latest --> Connect a container to a user-defined bridge
+#docker network create --driver=bridge --subnet=192.168.0.0/16 gk-net --> Specify advanced options
+
+
+
+ 										
+
+ 
+
+

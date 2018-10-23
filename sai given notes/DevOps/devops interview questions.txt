@@ -1,0 +1,27 @@
+################################ interview questions ###########################################
+1.How to monitor jenkins build jobs?
+-> install Build monitor plugin in jenkins
+-> Create a new view and select Build Monitor View
+-> Select Jobs and save the details.
+-> Ref link : https://www.packtpub.com/mapt/book/application_development/9781783553471/7/ch07lvl1sec50/build-monitoring-with-build-monitor-plugin 
+
+2.what is POM?
+-> POM is a xml file which contains the project configuration details used by Maven. 
+-> It provides all the configuration required for a project.
+-> POM means Project Object Model & as the name suggests it defines the model of the project as well.
+-> In the normal project development you will add jar files & libraries as required.In maven based development, those jars, libraries are added to the project using this pom.xml.
+-> In the pom context we call those jars, libraries as Dependencies.
+ 
+3.diff b/w branch and tag?
+4.what is docker?
+-> Docker is a tool designed to make it easier to create, deploy, and run applications by using containers.
+-> Build once you can ship anywhere.
+
+5.How to check open ports in remote server?
+-> Link: https://www.youtube.com/watch?v=FNTv7BmpR1E
+-> #nmap <i.p>
+
+6. diff b/w yum update and upgrade?
+7. diff b/w git merge and rebase ?
+8. what is git stash ?
+

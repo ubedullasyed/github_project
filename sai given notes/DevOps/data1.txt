@@ -1,0 +1,35 @@
+what is devops?
+
+-> Devops is practices and set up a roles.
+-> Dev + ops our main aim is it reduce the gap b/w develper activities and ops activities we need to delivery the code continuous by using these devops tools. 
+-> DevOps is founded on building a culture of collaboration between teams.
+-> DevOps is a set of practices that automates the processes between software development and IT teams, 
+in order that they can build, test, and release software faster and more reliably.
+
+-> Getting code from the dev and putting into the prod.
+
+-> Automation : getting code from develper , testing automatically going into the production , and going into the last stage of production.
+
+-> Delivery: you are moving into the product from one env to another env.
+use: data center public and private,cloud.
+
+-> devops uses: they are getting one person many roles
+when the product is going from pre-prod to prod it is called CD.
+
+CI and CD:
+
+For example muttiple develpers working on the same application each of them have there own feature and bug fix they are working on and they are contributing same application
+into the same code repository.
+
+Code repository could be version control system like GIT HUB.
+when develper push's the code to the repository it is build to the link management system like Jenkins that takes the code and build it.
+once test pass successfully we can confirm build cycle is complete.
+
+CD:
+
+what we do once testing is completed successfully next step is to release next version of the application
+Relasing the software this way automatically to a pipe line is know as continuous Delivery.
+Next step is to take a package then automatically deploy inthere Env.
+This process automatically updating production env with the changes inthe application is ref to continuous deployment.
+
+when the application code is changed and push to the code repository automatically build and tested to a build pipe line then release the release management system and finally deploy to production in the target env.

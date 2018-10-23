@@ -1,0 +1,18 @@
+--> AWS ELB
+
+1.ELB nothing but when appication traffic comes ELB receive the traffic it's like one single URL IP and automatically distributed traffic those traffic across multiple instance.These instance can be spread across multiple AZ's.
+
+2. one important point is instance must be configure with in the AZ's.
+3. It takes care of the fault tolerance.
+4. It's more secure your back end instance are not expose to the public.There is Mask in between your ELB public ip will be expose to the public.
+5. Health check: ELB is going to check periodically monitor the Health check of each instance.
+6. HC means ELB every time ping or telnet instance it's lessing or not . if any time will not lession port 80 it's deculer the instance is not lession port 80 and fail then ELB not sending the traffic that instance and traffic is distributed to another instances.
+
+-> Elastic Load Balancing automatically distributes incoming application traffic across multiple targets, such as Amazon EC2 instances, containers, and IP addresses
+
+-> You can select the appropriate load balancer based on your application needs:
+Application Load Balancer: If you need flexible application management. (HTTP, HTTPS)
+Network Load Balancer: If extreme performance and static IP is needed for your application. (TCP)
+Classic Load Balancer: If you have an existing application that was built within the EC2-Classic network. (TCP, SSL, HTTP, HTTPS)
+
+-> This increases the availability of your application. You add one or more listeners to your load balancer
